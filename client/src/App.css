@@ -1,0 +1,7 @@
+.App {
+  height: 100vh;
+}
+
+main > div {
+  padding: 1em;
+}

@@ -1,0 +1,13 @@
+.AlertPanel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.5em;
+
+  background-color: #fddf7c;
+  padding: 1em;
+}
+
+.AlertPanel>*:first-child {
+  flex-grow: 10;
+}

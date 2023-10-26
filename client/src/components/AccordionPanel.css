@@ -1,0 +1,11 @@
+.AccordionPanel h3 {
+  margin: 0;
+  padding: 1em;
+
+  cursor: pointer;
+}
+
+.AccordionPanel p {
+  margin: 0;
+  padding: 1em;
+}
