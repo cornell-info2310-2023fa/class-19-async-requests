@@ -9,9 +9,15 @@ import AccordionPanel from './components/AccordionPanel';
 
 export default function App() {
 
-  const [alert, setAlert] = useState("test alert");
+  const [alert, setAlert] = useState(null);
+
   useEffect(() => {
-    console.log("ready to request alert data");
+    axios.get('/api/alert.json')
+    .then((response) => {
+      setAlert(response.data);
+    })
+    .catch((err) => {
+    });
   }, []);
 
   const [panelActiveIndex, setPanelActiveIndex] = useState(-1);
@@ -24,7 +30,11 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
-  useEffect(() => {
+  function loadDocs() {
+    // reset loading and error states before loading data
+    setIsLoading(true);
+    setError(null);
+
     axios.get('/api/docs.json')
       .then((response) => {
         const json = response.data;
@@ -38,6 +48,11 @@ export default function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  // load docs after initial render
+  useEffect(() => {
+    loadDocs();
   }, []);
 
   return (
@@ -50,8 +65,8 @@ export default function App() {
       }}>
 
       {alert && (
-        <AlertPanel>
-          {alert}
+        <AlertPanel onClose={() => { setAlert(null); }}>
+          {alert.message}
         </AlertPanel>
       )}
 
@@ -66,7 +81,7 @@ export default function App() {
         {error && (
           <div className="error">
             <p>{`There is a problem fetching the documentation. (${error})`}</p>
-            <button>Retry</button>
+            <button onClick={loadDocs}>Retry</button>
           </div>
         )}
 
